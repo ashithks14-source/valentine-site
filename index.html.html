@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Valentine’s Day ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2b2b2b;
+    }
+    .card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      padding: 28px 24px 32px;
+      max-width: 420px;
+      width: 92%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 44px;
+      margin: 4px 0 10px;
+      color: #e63946;
+    }
+    .sticker { font-size: 80px; margin: 10px 0 6px; animation: pop 1.2s ease-in-out infinite; }
+    @keyframes pop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+
+    .message { font-size: 18px; line-height: 1.6; margin: 12px 0 18px; }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .primary { background: #e63946; color: #fff; box-shadow: 0 10px 20px rgba(230,57,70,0.3); }
+    .secondary { background: #ffd6da; color: #b21f2d; box-shadow: 0 8px 16px rgba(178,31,45,0.2); }
+    .primary:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(230,57,70,0.4); }
+
+    .screen { display: none; }
+    .screen.active { display: block; animation: screenFade .4s ease both; }
+    @keyframes screenFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .buttons { margin-top: 10px; display: flex; gap: 12px; justify-content: center; align-items: center; }
+
+    .question { font-size: 22px; font-weight: 600; margin: 14px 0 12px; color: #e63946; }
+
+    .big-sticker { font-size: 96px; margin-top: 10px; }
+    .footer-text { margin-top: 10px; font-size: 18px; color: #e63946; font-weight: 600; }
+
+    img.photo { 
+      width:100%; 
+      border-radius:16px; 
+      margin:12px 0; 
+      box-shadow:0 10px 24px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: scale(0.96);
+      animation: photoReveal .8s ease forwards;
+    }
+    @keyframes photoReveal {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Floating hearts */
+    .floating { position: absolute; opacity: .15; font-size: 72px; animation: float 10s linear infinite; }
+    @keyframes float { 0% { transform: translateY(120vh) rotate(0deg); } 100% { transform: translateY(-120vh) rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- Screen 1: Wish -->
+    <div class="screen active" id="screen1">
+      <div class="title">Happy Valentine’s Day</div>
+      <div class="sticker">💖</div>
+      <div class="message">
+        You make my days brighter and my smiles easier. I just wanted to wish you a very Happy Valentine’s Day 💌
+      </div>
+      <div class="buttons">
+        <button class="btn primary" id="nextBtn">Next ➜</button>
+      </div>
+    </div>
+
+    <!-- Screen 2: Question -->
+    <div class="screen" id="screen2">
+      <div class="title">Just One Question…</div>
+      <div class="sticker">💘</div>
+      <div class="question">Will you be my Valentine?</div>
+      <div class="buttons">
+        <button class="btn primary" id="yesBtn">Yes ❤️</button>
+        <button class="btn secondary" id="noBtn">No 🙈</button>
+      </div>
+    </div>
+
+    <!-- Screen 3: Success -->
+    <div class="screen" id="screen3">
+      <div class="title">Yay! 🥰</div>
+      <img class="photo" src="memory.jpg" alt="Our memory" />
+      <div class="big-sticker">🎉💞</div>
+      <div class="footer-text">The best decision you ever made ✨</div>
+    </div>
+
+    <!-- Screen 4: How dare you -->
+    <div class="screen" id="screen4">
+      <div class="title">Hey! 😤</div>
+      <img class="photo" src="howdareyou.jpg" alt="How dare you" />
+      <div class="footer-text">How dare you</div>
+      <div class="buttons" style="margin-top:14px;">
+        <button class="btn primary" id="sorryBtn">I'm sorry 🙈</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="floating" style="left:10%; animation-duration: 12s;">❤️</div>
+  <div class="floating" style="left:45%; animation-duration: 9s;">💖</div>
+  <div class="floating" style="left:75%; animation-duration: 11s;">💘</div>
+
+  <script>
+    const screen1 = document.getElementById('screen1');
+    const screen2 = document.getElementById('screen2');
+    const screen3 = document.getElementById('screen3');
+    const screen4 = document.getElementById('screen4');
+    const nextBtn = document.getElementById('nextBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const sorryBtn = document.getElementById('sorryBtn');
+
+    function show(screen) {
+      [screen1, screen2, screen3, screen4].forEach(s => s.classList.remove('active'));
+      screen.classList.add('active');
+    }
+
+    nextBtn.addEventListener('click', () => show(screen2));
+    yesBtn.addEventListener('click', () => show(screen3));
+    noBtn.addEventListener('click', () => show(screen4));
+    sorryBtn.addEventListener('click', () => show(screen2));
+  </script>
+</body>
+</html>
